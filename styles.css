@@ -64,21 +64,21 @@ p {
 }
 
 #relatorio {
-    padding: 20px;
+    padding: 5px;
     text-align: center;
     margin: 20px auto;
     width: 50%;
 }
 
-.pdf {
-    display: flex;
-    margin: -20px auto;
-    padding: 10px auto;
+.btn-relatorios {
+    display: none;
+    margin: 0 auto;
+    padding: 5px auto;
+    text-align: center;
 }
 
-#botao-gerar, #botao-enviar {
+#botao-gerar, #botao-enviar, #voltar {
     margin: 0 auto;
-    display: none;
     border: none;
     background-color: #021a3d;
     color: #fff;
