@@ -76,7 +76,7 @@ p {
     padding: 10px auto;
 }
 
-#botao {
+#botao-gerar, #botao-enviar {
     margin: 0 auto;
     display: none;
     border: none;
