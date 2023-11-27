@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Relatório Salarial </title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Inclua a biblioteca jsPDF diretamente do CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- Inclua a biblioteca html2canvas para converter HTML para imagem -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Relatório Salarial</h1>
+        <form id="formulario">
+            <div class="form-group">
+                <label for="nome">Nome Completo:</label> <br>
+                <input type="text" class="form-control" id="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email"> Email:</label> <br>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="data-inicio">Data Início:</label> <br>
+                <input type="text" id="data-inicio" name="data"  placeholder="dd/mm/aaaa" maxlength="10" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="validade-contrato">Validade do Contrato:</label> <br>
+                <input type="text" class="form-control" id="validade-contrato" placeholder="dd/mm/aaaa"  maxlength="10" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="salario">Salário (R$):</label> <br>
+                <input type="text" class="form-control" id="salario" oninput="formatarDinheiro(this)" placeholder="R$ 0,00" required>
+            </div>
+            
+        </form>
+        <button type="submit" id="btn-relatorio" onclick="gerarRelatorio()">Gerar Relatório</button>
+    </div>
+
+    <div id="relatorio">
+    </div>
+    <div class="pdf">
+        <button type="button" id="botao" class="btn btn-secondary" onclick="enviarRelatorio()">Gerar PDF</button>  
+    </div>
+
+  <script src="script.js"></script>
+  <script>
+    async function gerarPDF() {
+      const pdf = new window.jspdf.jsPDF();
+      const elementoRelatorio = document.getElementById('relatorio');
+  
+      // Use html2canvas para converter o HTML para uma imagem
+      const canvas = await window.html2canvas(elementoRelatorio);
+  
+      // Adicione a imagem convertida ao PDF
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 15);
+  
+      // Salve o PDF
+      pdf.save('relatorio.pdf');
+    }
+  </script>
+
+  <script>
+    function enviarRelatorio() {
+        const relatorio = document.getElementById('relatorio').value;
+        const email = document.getElementById('email').value;
+
+        // Substitua o URL pelo endereço real do seu servidor no Replit
+        fetch('https://relatorio-salarial.pipelinehype.repl.co/gerar-relatorio', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `htmlContent=${encodeURIComponent(relatorio)}&toEmail=${email}`,
+        })
+        .then(response => response.text())
+        .then(message => alert(message))
+        .catch(error => console.error('Erro:', error));
+}
+  </script>
+  
+</body>
+</html>
