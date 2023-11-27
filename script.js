@@ -53,9 +53,8 @@ function formatarData(inputValue) {
     var validadeContrato = parseData(document.getElementById('validade-contrato').value);
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
-    var btnPdf = document.querySelector('#botao-gerar');
-    var enviarRelatorio = document.querySelector('#botao-enviar');
-
+    var btnRelatorios = document.querySelector('.btn-relatorios');
+   
     // Array para armazenar os relatórios mensais
     var relatoriosMensais = [];
 
@@ -94,8 +93,7 @@ function formatarData(inputValue) {
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
     gerarRelatorio.style.display = "none"
-    btnPdf.style.display = "block"
-    enviarRelatorio.style.display = "block"
+    btnRelatorios.style.display = "block"
 }
 
   // Função para calcular os dias trabalhados proporcionalmente para o primeiro e último mês
@@ -132,3 +130,7 @@ function formatarData(inputValue) {
       var partes = dataString.split('/');
       return new Date(partes[2], partes[1] - 1, partes[0]);
   }
+
+  function reiniciarPagina() {
+    location.reload();
+}
