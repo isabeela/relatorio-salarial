@@ -52,15 +52,12 @@ function formatarData(inputValue) {
     var dataInicio = parseData(document.getElementById('data-inicio').value);
     var validadeContrato = parseData(document.getElementById('validade-contrato').value);
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
-    var gerarRelatorio = document.querySelector('.container')
-    var btnPdf = document.querySelector('#botao')
+    var gerarRelatorio = document.querySelector('.container');
+    var btnPdf = document.querySelector('#botao-gerar');
+    var enviarRelatorio = document.querySelector('#botao-enviar');
 
     // Array para armazenar os relatórios mensais
     var relatoriosMensais = [];
-
-    // Inicializa diaInicio antes do loop
-    var diaInicio = dataInicio.getDate();
-
 
     // Loop entre a data de início e a validade do contrato
     var currentDate = new Date(dataInicio);
@@ -98,6 +95,7 @@ function formatarData(inputValue) {
 
     gerarRelatorio.style.display = "none"
     btnPdf.style.display = "block"
+    enviarRelatorio.style.display = "block"
 }
 
   // Função para calcular os dias trabalhados proporcionalmente para o primeiro e último mês
@@ -134,7 +132,3 @@ function formatarData(inputValue) {
       var partes = dataString.split('/');
       return new Date(partes[2], partes[1] - 1, partes[0]);
   }
-
-  
-  
-
