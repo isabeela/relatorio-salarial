@@ -70,20 +70,19 @@
 
   <script>
     function enviarRelatorio() {
-        const relatorio = document.getElementById('relatorio').value;
-        const email = document.getElementById('email').value;
+    const relatorioContent = document.getElementById('relatorio').innerHTML;
+    const email = document.getElementById('email').value;
 
-        // Substitua o URL pelo endereço real do seu servidor no Replit
-        fetch('https://relatorio-salarial.pipelinehype.repl.co/', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `htmlContent=${encodeURIComponent(relatorio)}&toEmail=${email}`,
-        })
-        .then(response => response.text())
-        .then(message => alert(message))
-        .catch(error => console.error('Erro:', error));
+    fetch('https://relatorio-salarial.pipelinehype.repl.co/', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `htmlContent=${encodeURIComponent(relatorioContent)}&toEmail=${email}`,
+    })
+    .then(response => response.text())
+    .then(message => alert(message))
+    .catch(error => console.error('Erro:', error));
 }
   </script>
   
