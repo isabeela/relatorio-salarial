@@ -73,7 +73,7 @@ p {
 .btn-relatorios {
     display: none;
     margin: 0 auto;
-    padding: 5px auto;
+    padding: 0 0 30px 0;
     text-align: center;
 }
 
