@@ -81,7 +81,7 @@ function formatarData(inputValue) {
     }
 
     // Construa o relatório mensal
-    var relatorioFinal = "<h2>Relatório Salarial  - " + "  " + nome; + "</h2>"
+    var relatorioFinal = "<h2>Relatório de Remuneração  - " + "  " + nome; + "</h2>"
     for (var i = 0; i < relatoriosMensais.length; i++) {
         relatorioFinal += "<p><strong>" +  "20"  + '/' + relatoriosMensais[i].mesAno + "</strong>" +  "_____________________" + formatarSalario(parseFloat(relatoriosMensais[i].salarioMensal)) + "</p>";
     }
