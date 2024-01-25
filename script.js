@@ -46,7 +46,7 @@ function formatarData(inputValue) {
     e.target.value = formatarData(e.target.value);
   });
   
-  function gerarRelatorio() {
+ function gerarRelatorio() {
     // Obtenha os valores do formulário
     var nome = document.getElementById('nome').value;
     var dataInicio = parseData(document.getElementById('data-inicio').value);
@@ -54,9 +54,17 @@ function formatarData(inputValue) {
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
-   
+
     // Array para armazenar os relatórios mensais
     var relatoriosMensais = [];
+
+    // Construa o cabeçalho do relatório
+    var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
+        "<table>" +
+        "<tr>" +
+        "<th>Data de Pagamento</th>" +
+        "<th>Valor Mensal</th>" +
+        "</tr>";
 
     // Loop entre a data de início e a validade do contrato
     var currentDate = new Date(dataInicio);
@@ -67,33 +75,26 @@ function formatarData(inputValue) {
         var salarioMensal = (salario / 30) * diasTrabalhados;
 
         var mes = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
-        
 
-        var relatorioMensal = {
-            mesAno: mes + '/' + currentDate.getFullYear(),
-            salarioMensal: salarioMensal,
-        };
-
-        relatoriosMensais.push(relatorioMensal);
+        // Adicione a linha da tabela para cada mês
+        relatorioFinal += "<tr>" +
+            "<td>" + "20" + '/' + mes + '/' + currentDate.getFullYear() + "</td>" +
+            "<td>" + formatarSalario(parseFloat(salarioMensal)) + "</td>" +
+            "</tr>";
 
         // Avance para o próximo mês
         currentDate.setMonth(currentDate.getMonth() + 1);
     }
 
-    // Construa o relatório mensal
-    var relatorioFinal = "<h2>Relatório de Remuneração  - " + "  " + nome; + "</h2>" + "<br>" + "Data de Pagamento" +  "_____________________" + "Valor Mensal"
-    for (var i = 0; i < relatoriosMensais.length; i++) {
-        relatorioFinal += "<p><strong>" +  "20"  + '/' + relatoriosMensais[i].mesAno + "</strong>" +  "_____________________" + formatarSalario(parseFloat(relatoriosMensais[i].salarioMensal)) + "</p>";
-    }
-    relatorioFinal += "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>"
-    relatorioFinal += "<p> * Valores salariais sujeitos a alterações </p>"
-
+    relatorioFinal += "</table>" +
+        "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
+        "<p> * Valores salariais sujeitos a alterações </p>";
 
     // Exiba o relatório na div de relatório
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
-    gerarRelatorio.style.display = "none"
-    btnRelatorios.style.display = "block"
+    gerarRelatorio.style.display = "none";
+    btnRelatorios.style.display = "block";
 }
 
   // Função para calcular os dias trabalhados proporcionalmente para o primeiro e último mês
