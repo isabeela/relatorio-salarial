@@ -102,12 +102,11 @@ function formatarData(inputValue) {
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
-        return (diasNoPrimeiroMes / diasNoMesAtual) * diasNoPrimeiroMes;
-    } else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        var diasUltimoMes = validadeContrato.getDate();
-        return diasUltimoMes;
+        var diasTrabalhadosNoPrimeiroMes = diasNoPrimeiroMes - 1; // Desconta o dia de início
+
+        return diasTrabalhadosNoPrimeiroMes;
     } else {
-        return diasNoMesAtual; // Para os meses intermediários, retornamos o total de dias no mês
+        return diasNoMesAtual; // Para os meses intermediários e o último mês, retornamos o total de dias no mês
     }
 }
 
