@@ -97,20 +97,17 @@ function formatarData(inputValue) {
     btnRelatorios.style.display = "block";
 }
 
-  // Função para calcular os dias trabalhados proporcionalmente para o primeiro e último mês
   function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
         return diasNoPrimeiroMes;
-    } else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        var diasUltimoMes = validadeContrato.getDate();
-        return diasUltimoMes;
     } else {
         return diasNoMesAtual;
     }
 }
+
 
   // Função para obter o número de dias em um determinado mês
   function diasNoMes(month, year) {
