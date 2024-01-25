@@ -86,7 +86,7 @@ function formatarData(inputValue) {
         currentDate.setMonth(currentDate.getMonth() + 1);
     }
 
-    relatorioFinal += "</table>" +
+    relatorioFinal += "<tr><td colspan='2'>_________________</td></tr>"; +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
         "<p> * Valores salariais sujeitos a alterações </p>";
 
