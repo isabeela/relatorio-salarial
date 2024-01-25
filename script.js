@@ -107,7 +107,7 @@ function formatarData(inputValue) {
 
         return diasTrabalhadosNoPrimeiroMes;
     } else {
-        return salarioMensal; // Para os meses intermediários e o último mês, retornamos o total de dias no mês
+        return diasNoMesAtual; // Para os meses intermediários e o último mês, retornamos o total de dias no mês
     }
 }
 
