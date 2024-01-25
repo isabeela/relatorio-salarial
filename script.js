@@ -102,14 +102,15 @@ function formatarData(inputValue) {
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
-        return diasNoPrimeiroMes;
+        return (diasNoPrimeiroMes / diasNoMesAtual) * diasNoPrimeiroMes;
     } else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
         var diasUltimoMes = validadeContrato.getDate();
         return diasUltimoMes;
     } else {
-        return diasNoMesAtual; 
+        return diasNoMesAtual; // Para os meses intermediários, retornamos o total de dias no mês
     }
 }
+
 
 
 
