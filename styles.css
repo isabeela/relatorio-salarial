@@ -79,11 +79,7 @@ p {
 
 #relatorio th, #relatorio td {
   padding: 8px;
-  text-align: left;
-}
-
-#relatorio th {
-  background-color: #f2f2f2;
+  text-align: center;
 }
 
 #relatorio h2 {
