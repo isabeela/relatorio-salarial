@@ -82,8 +82,6 @@ function formatarData(inputValue) {
             "<td>" + formatarSalario(parseFloat(salarioMensal)) + "</td>" +
             "</tr>";
 
-        relatorioFinal += "<tr><td colspan='2'>___</td></tr>";
-
         // Avance para o próximo mês
         currentDate.setMonth(currentDate.getMonth() + 1);
     }
