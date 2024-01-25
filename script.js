@@ -99,7 +99,7 @@ function formatarData(inputValue) {
 
   function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-    var diasNoMesAtual = 30;
+    var diaSalarioMensal = 30;
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
@@ -107,7 +107,7 @@ function formatarData(inputValue) {
 
         return diasTrabalhadosNoPrimeiroMes;
     } else {
-        return diasNoMesAtual; // Para os meses intermediários e o último mês, retornamos o total de dias no mês
+        return diaSalarioMensal;
     }
 }
 
