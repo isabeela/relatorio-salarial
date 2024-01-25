@@ -103,10 +103,14 @@ function formatarData(inputValue) {
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
         return diasNoPrimeiroMes;
+    } else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
+        var diasUltimoMes = validadeContrato.getDate();
+        return diasUltimoMes;
     } else {
-        return diasNoMesAtual;
+        return diasNoMesAtual; 
     }
 }
+
 
 
   // Função para obter o número de dias em um determinado mês
