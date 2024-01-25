@@ -83,7 +83,7 @@ function formatarData(inputValue) {
     // Construa o relatório mensal
     var relatorioFinal = "<h2>Relatório de Remuneração  - " + "  " + nome; + "</h2>"
     for (var i = 0; i < relatoriosMensais.length; i++) {
-        relatorioFinal += "<p><strong>" +  "20"  + '/' + relatoriosMensais[i].mesAno + "</strong>" +  "_____________________" + formatarSalario(parseFloat(relatoriosMensais[i].salarioMensal)) + "</p>";
+        relatorioFinal += "<p><strong> Data de pagamento:" +  "20"  + '/' + relatoriosMensais[i].mesAno + "</strong>" +  "_____________________" + "Valor mensal" + formatarSalario(parseFloat(relatoriosMensais[i].salarioMensal)) + "</p>";
     }
     relatorioFinal += "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>"
     relatorioFinal += "<p> * Valores salariais sujeitos a alterações </p>"
