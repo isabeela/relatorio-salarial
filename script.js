@@ -59,7 +59,7 @@ function formatarData(inputValue) {
     var relatoriosMensais = [];
 
     // Construa o cabeçalho do relatório
-    var relatorioFinal = "<h1>Relatório de Remuneração - " + nome + "</h1>" +
+    var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
         "<th>Data de Pagamento</th>" +
