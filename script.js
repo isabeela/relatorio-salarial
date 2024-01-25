@@ -106,7 +106,12 @@ function formatarData(inputValue) {
         var diasTrabalhadosNoPrimeiroMes = diasNoPrimeiroMes - 1; // Desconta o dia de início
 
         return diasTrabalhadosNoPrimeiroMes;
-    } else {
+    } 
+    else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
+        var diasTrabalhadosNoUltimoMes = validadeContrato.getDate();
+        return diasTrabalhadosNoUltimoMes;
+    }
+    else {
         return diaSalarioMensal;
     }
 }
