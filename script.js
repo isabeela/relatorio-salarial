@@ -97,7 +97,7 @@ function formatarData(inputValue) {
     btnRelatorios.style.display = "block";
 }
 
-  function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
+  function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato, salarioMensal) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
