@@ -88,6 +88,7 @@ function formatarData(inputValue) {
 
         relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
+        "<p> Caso dia 20 caia no final de semana, o pagamento será efetuado no próximo dia útil </p>" +
         "<p> * Valores salariais sujeitos a alterações </p>";
 
     // Exiba o relatório na div de relatório
