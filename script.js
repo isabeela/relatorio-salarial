@@ -104,7 +104,6 @@ function formatarData(inputValue) {
     btnRelatorios.style.display = "block";
 }
 
-
   function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
     var diaSalarioMensal = 30;
