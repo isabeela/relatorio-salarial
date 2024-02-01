@@ -55,6 +55,12 @@ function formatarData(inputValue) {
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
 
+    // Adicione um mês ao mês de início e final
+    var dataInicioRelatorio = new Date(dataInicio);
+    var dataFinalRelatorio = new Date(validadeContrato);
+    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);  // Adiciona um mês
+    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);    // Adiciona um mês
+
     // Array para armazenar os relatórios mensais
     var relatoriosMensais = [];
 
@@ -67,10 +73,10 @@ function formatarData(inputValue) {
         "</tr>";
 
     // Loop entre a data de início e a validade do contrato
-    var currentDate = new Date(dataInicio);
+    var currentDate = new Date(dataInicioRelatorio);
 
     // Garante que o loop seja executado até o mês de validade do contrato
-    while (currentDate <= validadeContrato || (currentDate.getFullYear() === validadeContrato.getFullYear() && currentDate.getMonth() === validadeContrato.getMonth())) {
+    while (currentDate <= dataFinalRelatorio || (currentDate.getFullYear() === dataFinalRelatorio.getFullYear() && currentDate.getMonth() === dataFinalRelatorio.getMonth())) {
         var diasTrabalhados = calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato);
         var salarioMensal = (salario / 30) * diasTrabalhados;
 
@@ -86,7 +92,7 @@ function formatarData(inputValue) {
         currentDate.setMonth(currentDate.getMonth() + 1);
     }
 
-        relatorioFinal += "</table>" +
+    relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
         "<p> Caso dia 20 caia no final de semana, o pagamento será efetuado no próximo dia útil </p>" +
         "<p> * Valores salariais sujeitos a alterações </p>";
