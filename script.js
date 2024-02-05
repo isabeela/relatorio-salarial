@@ -100,7 +100,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
     var outrosMeses = 30;
@@ -118,6 +117,7 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
         return outrosMeses;
     }
 }
+
 
 
 
