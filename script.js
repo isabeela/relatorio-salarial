@@ -134,23 +134,10 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
 
   
   // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
- function parseData(dataString) {
-    var partes = dataString.split('/');
-    var ano = parseInt(partes[2], 10);
-    var mes = parseInt(partes[1], 10) - 1;  // Ajuste para zero-based (Janeiro é 0)
-    var dia = parseInt(partes[0], 10);
-
-    // Configura a data para o último dia do mês
-    var data = new Date(ano, mes + 1, 0);
-    
-    // Garante que a data final não ultrapasse a validade do contrato
-    if (data > validadeContrato) {
-        data = validadeContrato;
-    }
-
-    return data;
-}
-
+  function parseData(dataString) {
+      var partes = dataString.split('/');
+      return new Date(partes[2], partes[1] - 1, partes[0]);
+  }
 
   function reiniciarPagina() {
     location.reload();
