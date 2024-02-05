@@ -110,15 +110,17 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
         var diasTrabalhadosNoPrimeiroMes = diasNoPrimeiroMes - 1; // Desconta o dia de início
         return diasTrabalhadosNoPrimeiroMes;
     } 
-    else if (currentDate.getFullYear() * 12 + currentDate.getMonth() === validadeContrato.getFullYear() * 12 + validadeContrato.getMonth()) {
+    else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
         // Ajuste para considerar até o último dia do mês
-        var diasTrabalhadosNoUltimoMes = diasNoMesAtual - (diasNoMesAtual - validadeContrato.getDate()) + 1;
+        var ultimoDiaMes = new Date(validadeContrato.getFullYear(), validadeContrato.getMonth() + 1, 0).getDate();
+        var diasTrabalhadosNoUltimoMes = ultimoDiaMes - (diasNoMesAtual - validadeContrato.getDate());
         return diasTrabalhadosNoUltimoMes;
     }
     else {
         return outrosMeses;
     }
 }
+
 
 
   // Função para obter o número de dias em um determinado mês
