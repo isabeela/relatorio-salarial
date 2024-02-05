@@ -112,7 +112,9 @@ function gerarRelatorio() {
         return diasTrabalhadosNoPrimeiroMes;
     } 
     else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return validadeContrato.getDate();
+        // Ajuste para considerar até o último dia do mês
+        var diasTrabalhadosNoUltimoMes = diasNoMesAtual - (diasNoMesAtual - validadeContrato.getDate()) + 1;
+        return diasTrabalhadosNoUltimoMes;
     }
     else {
         return outrosMeses;
