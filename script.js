@@ -103,7 +103,7 @@ function gerarRelatorio() {
 
 function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-    var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
+    var outrosMeses = 30;
 
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
         var diasNoPrimeiroMes = diasNoMesAtual - (dataInicio.getDate() - 1);
@@ -111,12 +111,11 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
         return diasTrabalhadosNoPrimeiroMes;
     } 
     else if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        var ultimoDiaMes = new Date(validadeContrato.getFullYear(), validadeContrato.getMonth() + 1, 0).getDate();
-        var diasTrabalhadosNoUltimoMes = ultimoDiaMes - (diasNoMesAtual - validadeContrato.getDate());
+        var diasTrabalhadosNoUltimoMes = validadeContrato.getDate(); // Considera todos os dias até a validade do contrato
         return diasTrabalhadosNoUltimoMes;
     }
     else {
-        return salario;
+        return outrosMeses;
     }
 }
 
