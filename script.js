@@ -58,9 +58,6 @@ function gerarRelatorio() {
     // Adicione um mês ao mês de início e final
     var dataInicioRelatorio = new Date(dataInicio);
     var dataFinalRelatorio = new Date(validadeContrato);
-    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);  // Adiciona um mês
-    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);    // Adiciona um mês
-
     // Array para armazenar os relatórios mensais
     var relatoriosMensais = [];
 
