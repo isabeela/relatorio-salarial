@@ -70,18 +70,18 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
-        var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
+    var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
+    var ano = dataInicioRelatorio.getFullYear();
+    var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+    var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
 
-        relatorioFinal += "<tr>" +
-            "<td>20/" + mes + "/" + ano + "</td>" +
-            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-            "</tr>";
-
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-    }
+    relatorioFinal += "<tr>" +
+        "<td>20/" + mes + "/" + ano + "</td>" +
+        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+        "</tr>";
+  
+      dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+  }
 
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
@@ -103,8 +103,6 @@ function diasNoMes(month, year) {
 function formatarSalario(valor) {
         return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
-
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
 function parseData(dataString) {
