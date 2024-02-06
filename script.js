@@ -48,8 +48,20 @@ function formatarData(inputValue) {
   
 function calcularDiasTrabalhados(currentDate, dataInicio) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-    var diasTrabalhadosNoMes = diasNoMesAtual - (dataInicio.getDate() - 1) - 1; // Desconta o dia de início
-    return diasTrabalhadosNoMes;
+    var diasNoMesInicio = diasNoMes(dataInicio.getMonth(), dataInicio.getFullYear());
+
+    // Considera todos os dias no mês para o cálculo do primeiro mês
+    if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
+        return diasNoMesInicio - (dataInicio.getDate() - 1);
+    }
+
+    // Considera todos os dias no mês para o cálculo do último mês
+    if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
+        return dataInicio.getDate();
+    }
+
+    // Para os meses intermediários, considera o mês completo
+    return diasNoMesAtual;
 }
 
 function gerarRelatorio() {
@@ -107,8 +119,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
-
 
   // Função para obter o número de dias em um determinado mês
   function diasNoMes(month, year) {
