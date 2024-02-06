@@ -45,53 +45,23 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularDiasTrabalhados(dataInicio, validadeContrato) {
-    var ultimoDiaMesInicio = new Date(dataInicio.getFullYear(), dataInicio.getMonth() + 1, 0).getDate();
-    var diasTrabalhados = ultimoDiaMesInicio - dataInicio.getDate() + 1;
-
-    // Se a data de início e o último dia do mês forem do mesmo mês e ano
-    if (dataInicio.getMonth() === validadeContrato.getMonth() && dataInicio.getFullYear() === validadeContrato.getFullYear()) {
-        return diasTrabalhados;
-    }
-
-    // Se a data de início e a validade do contrato forem do mesmo mês e ano
-    if (dataInicio.getMonth() === validadeContrato.getMonth() && dataInicio.getFullYear() === validadeContrato.getFullYear()) {
-        return diasTrabalhados;
-    }
-
-    // Se não, calcular os dias restantes no mês da data de início
-    var diasRestantesNoMesInicio = ultimoDiaMesInicio - dataInicio.getDate() + 1;
-
-    // Calcular os dias trabalhados para cada mês completo entre dataInicio e validadeContrato
-    var diasEntreMesesCompletos = 0;
-    for (var i = dataInicio.getMonth() + 1; i < validadeContrato.getMonth(); i++) {
-        diasEntreMesesCompletos += diasNoMes(i, dataInicio.getFullYear());
-    }
-
-    // Calcular os dias trabalhados para o último mês do contrato
-    var diasNoUltimoMes = validadeContrato.getDate();
-
-    // Total de dias trabalhados
-    return diasRestantesNoMesInicio + diasEntreMesesCompletos + diasNoUltimoMes;
+function calcularDiasTrabalhados(dataInicio, diasNoMes) {
+    var diasTrabalhados = diasNoMes - parseInt(dataInicio.split('/')[0]) + 1;
+    return diasTrabalhados;
 }
 
-  
 function gerarRelatorio() {
-    // Obtenha os valores do formulário
     var nome = document.getElementById('nome').value;
-    var dataInicio = parseData(document.getElementById('data-inicio').value);
-    var validadeContrato = parseData(document.getElementById('validade-contrato').value);
+    var dataInicio = document.getElementById('data-inicio').value;
+    var validadeContrato = document.getElementById('validade-contrato').value;
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
+    
+    // Adicionando um mês para a data de início
+    var dataInicioRelatorio = new Date(parseData(dataInicio));
+    var dataFinalRelatorio = new Date(parseData(validadeContrato));
 
-    // Adicione um mês ao mês de início e final
-    var dataInicioRelatorio = new Date(dataInicio);
-    var dataFinalRelatorio = new Date(validadeContrato);
-    // Array para armazenar os relatórios mensais
-    var relatoriosMensais = [];
-
-    // Construa o cabeçalho do relatório
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
@@ -99,25 +69,20 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
-    // Use uma cópia de dataInicioRelatorio para iteração
-    var currentDate = new Date(dataInicioRelatorio);
+    while (dataInicioRelatorio <= dataFinalRelatorio) {
+        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+        var diasTrabalhados = calcularDiasTrabalhados(formatarData(dataInicio), diasNoMesAtual);
+        var salarioMensalProporcional = (salario / diasNoMesAtual) * diasTrabalhados;
 
-    // Garante que o loop seja executado até o mês de validade do contrato
-    while (currentDate <= dataFinalRelatorio || (currentDate.getFullYear() === dataFinalRelatorio.getFullYear() && currentDate.getMonth() === dataFinalRelatorio.getMonth())) {
-        var diasTrabalhados = calcularDiasTrabalhados(new Date(currentDate), dataInicio, dataFinalRelatorio);
-        var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-        var salarioMensal = (salario / diasNoMesAtual) * diasTrabalhados;
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
 
-        var mes = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
-
-        // Adicione a linha da tabela para cada mês
         relatorioFinal += "<tr>" +
-            "<td>" + "20" + '/' + mes + '/' + currentDate.getFullYear() + "</td>" +
-            "<td>" + formatarSalario(salarioMensal) + "</td>" +
+            "<td>" + "20" + '/' + mes + '/' + dataInicioRelatorio.getFullYear() + "</td>" +
+            "<td>" + formatarSalario(salarioMensalProporcional) + "</td>" +
             "</tr>";
 
-        // Avance para o próximo mês
-        currentDate.setMonth(currentDate.getMonth() + 1);
+        // Avançando para o próximo mês
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
     relatorioFinal += "</table>" +
@@ -125,12 +90,12 @@ function gerarRelatorio() {
         "<p> Caso dia 20 caia no final de semana, o pagamento será efetuado no próximo dia útil </p>" +
         "<p> * Valores salariais sujeitos a alterações </p>";
 
-    // Exiba o relatório na div de relatório
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 // Função para obter o número de dias em um determinado mês
