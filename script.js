@@ -46,8 +46,7 @@ document.getElementById('validade-contrato').addEventListener('input', function 
 });
 
 function calcularDiasTrabalhados(dataInicio, diasNoMes) {
-    var diasTrabalhados = diasNoMes - parseInt(dataInicio.split('/')[0]) + 1;
-    return diasTrabalhados;
+    return diasNoMes - parseInt(dataInicio.split('/')[0]);
 }
 
 function gerarRelatorio() {
@@ -95,8 +94,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
