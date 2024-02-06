@@ -55,11 +55,6 @@ function calcularDiasTrabalhados(currentDate, dataInicio) {
         return diasNoMesInicio; // Retorna todos os dias do mês de início
     }
 
-    // Considera todos os dias no mês para o cálculo do último mês
-    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return dataInicio.getDate(); // Retorna todos os dias até a validade do contrato
-    }
-
     // Para os meses intermediários, considera o mês completo
     return diasNoMesAtual;
 }
