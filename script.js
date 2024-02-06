@@ -46,6 +46,12 @@ function formatarData(inputValue) {
     e.target.value = formatarData(e.target.value);
   });
   
+function calcularDiasTrabalhados(currentDate, dataInicio) {
+    var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
+    var diasTrabalhadosNoMes = diasNoMesAtual - (dataInicio.getDate() - 1) - 1; // Desconta o dia de início
+    return diasTrabalhadosNoMes;
+}
+
 function gerarRelatorio() {
     // Obtenha os valores do formulário
     var nome = document.getElementById('nome').value;
@@ -74,8 +80,9 @@ function gerarRelatorio() {
 
     // Garante que o loop seja executado até o mês de validade do contrato
     while (currentDate <= dataFinalRelatorio || (currentDate.getFullYear() === dataFinalRelatorio.getFullYear() && currentDate.getMonth() === dataFinalRelatorio.getMonth())) {
-        var diasTrabalhados = calcularDiasTrabalhados(new Date(currentDate), dataInicio, validadeContrato);
-        var salarioMensal = (salario / 30) * diasTrabalhados;
+        var diasTrabalhados = calcularDiasTrabalhados(new Date(currentDate), dataInicio);
+        var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
+        var salarioMensal = (salario / diasNoMesAtual) * diasTrabalhados;
 
         var mes = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
 
@@ -100,11 +107,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-function calcularDiasTrabalhados(currentDate, dataInicio) {
-    var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-    var diasTrabalhadosNoMes = diasNoMesAtual - (dataInicio.getDate() - 1) - 1; // Desconta o dia de início
-    return diasTrabalhadosNoMes;
-}
+
 
 
   // Função para obter o número de dias em um determinado mês
