@@ -46,7 +46,7 @@ document.getElementById('validade-contrato').addEventListener('input', function 
 });
 
 function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
-    var diaInicio = parseInt(dataInicio.split('/')[1]);
+    var diaInicio = parseInt(dataInicio.split('/')[0]);
     return (salario / 30) * (diasNoMes - (diaInicio - 1));
 }
 
@@ -101,7 +101,7 @@ function diasNoMes(month, year) {
 }
 
 function formatarSalario(valor) {
-    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return valor.toFixed(2).replace('.', ','); // Formata para duas casas decimais e substitui o ponto por vírgula
 }
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
