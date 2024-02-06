@@ -12,7 +12,6 @@ async function gerarPDF() {
   pdf.save('relatorio.pdf');
 }
 
-
 function formatarData(inputValue) {
     inputValue = inputValue.replace(/\D/g, ''); // Remove caracteres não numéricos
   
@@ -25,9 +24,9 @@ function formatarData(inputValue) {
   
     // Limita o comprimento total a 10 caracteres
     return inputValue.slice(0, 10);
-  }
+}
 
-  function formatarDinheiro(input) {
+function formatarDinheiro(input) {
     // Remove caracteres não numéricos
     let value = input.value.replace(/\D/g, '');
 
@@ -36,15 +35,15 @@ function formatarData(inputValue) {
 
     // Atualiza o valor no campo de entrada
     input.value = value;
-  }
+}
   
-  document.getElementById('data-inicio').addEventListener('input', function (e) {
+document.getElementById('data-inicio').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
-  });
+});
   
-  document.getElementById('validade-contrato').addEventListener('input', function (e) {
+document.getElementById('validade-contrato').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
-  });
+});
   
 function gerarRelatorio() {
     // Obtenha os valores do formulário
@@ -74,7 +73,7 @@ function gerarRelatorio() {
 
     // Garante que o loop seja executado até o mês de validade do contrato
     while (currentDate <= dataFinalRelatorio || (currentDate.getFullYear() === dataFinalRelatorio.getFullYear() && currentDate.getMonth() === dataFinalRelatorio.getMonth())) {
-        var diasTrabalhados = calcularDiasTrabalhados(new Date(currentDate), dataInicio);
+        var diasTrabalhados = calcularDiasTrabalhados(new Date(currentDate), dataInicio, dataFinalRelatorio);
         var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
         var salarioMensal = (salario / diasNoMesAtual) * diasTrabalhados;
 
@@ -113,31 +112,30 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
 
     // Considera todos os dias no mês para o cálculo do último mês
     if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return dataInicio.getDate(); // Retorna todos os dias até a validade do contrato
+        return validadeContrato.getDate(); // Retorna todos os dias até a validade do contrato
     }
 
     // Para os meses intermediários, considera o mês completo
     return diasNoMesAtual;
 }
 
-  // Função para obter o número de dias em um determinado mês
-  function diasNoMes(month, year) {
-      return new Date(year, month + 1, 0).getDate();
-  }
+// Função para obter o número de dias em um determinado mês
+function diasNoMes(month, year) {
+    return new Date(year, month + 1, 0).getDate();
+}
 
-  // Função para formatar o salário
-  function formatarSalario(valor) {
+// Função para formatar o salário
+function formatarSalario(valor) {
     valor = valor * 1000
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
+}
 
-  
-  // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
-  function parseData(dataString) {
-      var partes = dataString.split('/');
-      return new Date(partes[2], partes[1] - 1, partes[0]);
-  }
+// Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
+function parseData(dataString) {
+    var partes = dataString.split('/');
+    return new Date(partes[2], partes[1] - 1, partes[0]);
+}
 
-  function reiniciarPagina() {
+function reiniciarPagina() {
     location.reload();
 }
