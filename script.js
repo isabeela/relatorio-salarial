@@ -44,6 +44,37 @@ document.getElementById('data-inicio').addEventListener('input', function (e) {
 document.getElementById('validade-contrato').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
 });
+
+function calcularDiasTrabalhados(dataInicio, validadeContrato) {
+    var ultimoDiaMesInicio = new Date(dataInicio.getFullYear(), dataInicio.getMonth() + 1, 0).getDate();
+    var diasTrabalhados = ultimoDiaMesInicio - dataInicio.getDate() + 1;
+
+    // Se a data de início e o último dia do mês forem do mesmo mês e ano
+    if (dataInicio.getMonth() === validadeContrato.getMonth() && dataInicio.getFullYear() === validadeContrato.getFullYear()) {
+        return diasTrabalhados;
+    }
+
+    // Se a data de início e a validade do contrato forem do mesmo mês e ano
+    if (dataInicio.getMonth() === validadeContrato.getMonth() && dataInicio.getFullYear() === validadeContrato.getFullYear()) {
+        return diasTrabalhados;
+    }
+
+    // Se não, calcular os dias restantes no mês da data de início
+    var diasRestantesNoMesInicio = ultimoDiaMesInicio - dataInicio.getDate() + 1;
+
+    // Calcular os dias trabalhados para cada mês completo entre dataInicio e validadeContrato
+    var diasEntreMesesCompletos = 0;
+    for (var i = dataInicio.getMonth() + 1; i < validadeContrato.getMonth(); i++) {
+        diasEntreMesesCompletos += diasNoMes(i, dataInicio.getFullYear());
+    }
+
+    // Calcular os dias trabalhados para o último mês do contrato
+    var diasNoUltimoMes = validadeContrato.getDate();
+
+    // Total de dias trabalhados
+    return diasRestantesNoMesInicio + diasEntreMesesCompletos + diasNoUltimoMes;
+}
+
   
 function gerarRelatorio() {
     // Obtenha os valores do formulário
@@ -101,12 +132,6 @@ function gerarRelatorio() {
     btnRelatorios.style.display = "block";
 }
 
-function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
-    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return validadeContrato.getDate() - dataInicio.getDate() + 1;
-    }
-    return diasNoMes(currentDate.getMonth(), currentDate.getFullYear()) - dataInicio.getDate() + 1;
-}
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
