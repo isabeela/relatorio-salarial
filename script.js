@@ -12,6 +12,7 @@ async function gerarPDF() {
   pdf.save('relatorio.pdf');
 }
 
+
 function formatarData(inputValue) {
     inputValue = inputValue.replace(/\D/g, ''); // Remove caracteres não numéricos
   
@@ -110,9 +111,9 @@ function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
         return diasNoMesInicio;
     }
 
-    // Considera todos os dias no mês para o cálculo do último mês
+    // Considera todos os dias até a data de validade do contrato para o último mês
     if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return validadeContrato.getDate(); // Retorna todos os dias até a validade do contrato
+        return validadeContrato.getDate();
     }
 
     // Para os meses intermediários, considera o mês completo
