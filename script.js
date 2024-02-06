@@ -137,6 +137,7 @@ function parseData(dataString) {
     return new Date(partes[2], partes[1] - 1, partes[0]);
 }
 
+
 function reiniciarPagina() {
     location.reload();
 }
