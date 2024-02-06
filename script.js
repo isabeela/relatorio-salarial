@@ -46,26 +46,6 @@ function formatarData(inputValue) {
     e.target.value = formatarData(e.target.value);
   });
   
-function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
-    var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
-    var diasNoMesInicio = diasNoMes(dataInicio.getMonth(), dataInicio.getFullYear());
-
-    // Considera todos os dias no mês para o cálculo do primeiro mês
-    if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
-        return diasNoMesInicio;
-    }
-
-    // Considera todos os dias no mês para o cálculo do último mês
-    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
-        return dataInicio.getDate(); // Retorna todos os dias até a validade do contrato
-    }
-
-    // Para os meses intermediários, considera o mês completo
-    return diasNoMesAtual;
-}
-
-
-
 function gerarRelatorio() {
     // Obtenha os valores do formulário
     var nome = document.getElementById('nome').value;
@@ -120,6 +100,24 @@ function gerarRelatorio() {
 
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
+}
+
+function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
+    var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
+    var diasNoMesInicio = diasNoMes(dataInicio.getMonth(), dataInicio.getFullYear());
+
+    // Considera todos os dias no mês para o cálculo do primeiro mês
+    if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
+        return diasNoMesInicio;
+    }
+
+    // Considera todos os dias no mês para o cálculo do último mês
+    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
+        return dataInicio.getDate(); // Retorna todos os dias até a validade do contrato
+    }
+
+    // Para os meses intermediários, considera o mês completo
+    return diasNoMesAtual;
 }
 
   // Função para obter o número de dias em um determinado mês
