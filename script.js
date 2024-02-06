@@ -45,8 +45,9 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularDiasTrabalhados(dataInicio, diasNoMes) {
-    return diasNoMes - parseInt(dataInicio.split('/')[0]);
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
+    var diasTrabalhados = diasNoMes - parseInt(dataInicio.split('/')[0]) + 1;
+    return (salario / 30) * diasTrabalhados;
 }
 
 function gerarRelatorio() {
@@ -70,8 +71,7 @@ function gerarRelatorio() {
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-        var diasTrabalhados = calcularDiasTrabalhados(formatarData(dataInicio), diasNoMesAtual);
-        var salarioMensalProporcional = (salario / diasNoMesAtual) * diasTrabalhados;
+        var salarioMensalProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
 
         var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
 
