@@ -101,11 +101,9 @@ function diasNoMes(month, year) {
     return new Date(year, month + 1, 0).getDate();
 }
 
-// Função para formatar o salário
 function formatarSalario(valor) {
-    return "R$ " + valor.toFixed(2).replace('.', ',');
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
-
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
 function parseData(dataString) {
