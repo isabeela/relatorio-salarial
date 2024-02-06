@@ -101,7 +101,7 @@ function diasNoMes(month, year) {
 }
 
 function formatarSalario(valor) {
-    return (valor * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 
