@@ -46,7 +46,7 @@ document.getElementById('validade-contrato').addEventListener('input', function 
 });
 
 function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
-    var diasTrabalhados = diasNoMes - parseInt(dataInicio.split('/')[0]) + 1;
+    var diasTrabalhados = diasNoMes - (dataInicio + 1);
     return (salario / 30) * diasTrabalhados;
 }
 
