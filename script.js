@@ -101,8 +101,9 @@ function diasNoMes(month, year) {
 }
 
 function formatarSalario(valor) {
-    return valor.toFixed(2).replace('.', ','); // Formata para duas casas decimais e substitui o ponto por vírgula
+    return valor.toLocaleString('pt-BR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }); // Formata para três casas decimais
 }
+
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
 function parseData(dataString) {
