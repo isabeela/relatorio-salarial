@@ -59,7 +59,6 @@ function gerarRelatorio() {
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
     
-    // Adicionando um mês para a data de início
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
 
@@ -71,17 +70,16 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
+        var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-        var salarioMensalProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
-
-        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Garante que o mês tenha dois dígitos
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
 
         relatorioFinal += "<tr>" +
-            "<td>" + "20" + '/' + mes + '/' + dataInicioRelatorio.getFullYear() + "</td>" +
-            "<td>" + formatarSalario(salarioMensalProporcional) + "</td>" +
+            "<td>20/" + mes + "/" + ano + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        // Avançando para o próximo mês
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
@@ -95,6 +93,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
