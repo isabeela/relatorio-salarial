@@ -12,7 +12,6 @@ async function gerarPDF() {
   pdf.save('relatorio.pdf');
 }
 
-
 function formatarData(inputValue) {
     inputValue = inputValue.replace(/\D/g, ''); // Remove caracteres não numéricos
   
@@ -32,7 +31,7 @@ function formatarDinheiro(input) {
     let value = input.value.replace(/\D/g, '');
 
     // Formata como dinheiro (R$)
-    value = (value / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    value = (parseFloat(value) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
     // Atualiza o valor no campo de entrada
     input.value = value;
@@ -83,7 +82,7 @@ function gerarRelatorio() {
         // Adicione a linha da tabela para cada mês
         relatorioFinal += "<tr>" +
             "<td>" + "20" + '/' + mes + '/' + currentDate.getFullYear() + "</td>" +
-            "<td>" + formatarSalario(parseFloat(salarioMensal)) + "</td>" +
+            "<td>" + formatarSalario(salarioMensal) + "</td>" +
             "</tr>";
 
         // Avance para o próximo mês
@@ -102,14 +101,11 @@ function gerarRelatorio() {
     btnRelatorios.style.display = "block";
 }
 
-function calcularDiasTrabalhados(salario, dataInicio) {
-    // Calcula o último dia do mês
-    var ultimoDiaMes = new Date(dataInicio.getFullYear(), dataInicio.getMonth() + 1, 0).getDate();
-
-    // Calcula o número de dias trabalhados no mês
-    var diasTrabalhados = salario / ultimoDiaMes * (ultimoDiaMes - (dataInicio.getDate() - 1));
-
-    return diasTrabalhados;
+function calcularDiasTrabalhados(currentDate, dataInicio, validadeContrato) {
+    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
+        return validadeContrato.getDate() - dataInicio.getDate() + 1;
+    }
+    return diasNoMes(currentDate.getMonth(), currentDate.getFullYear()) - dataInicio.getDate() + 1;
 }
 
 // Função para obter o número de dias em um determinado mês
@@ -119,7 +115,6 @@ function diasNoMes(month, year) {
 
 // Função para formatar o salário
 function formatarSalario(valor) {
-    valor = valor * 1000
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
@@ -128,7 +123,6 @@ function parseData(dataString) {
     var partes = dataString.split('/');
     return new Date(partes[2], partes[1] - 1, partes[0]);
 }
-
 
 function reiniciarPagina() {
     location.reload();
