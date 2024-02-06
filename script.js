@@ -50,17 +50,17 @@ function calcularDiasTrabalhados(currentDate, dataInicio) {
     var diasNoMesAtual = diasNoMes(currentDate.getMonth(), currentDate.getFullYear());
     var diasNoMesInicio = diasNoMes(dataInicio.getMonth(), dataInicio.getFullYear());
 
-    // Se for o primeiro mês, calculamos os dias trabalhados a partir do dia de início até o último dia do mês
+    // Considera todos os dias no mês para o cálculo do primeiro mês
     if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
-        return diasNoMesInicio - (dataInicio.getDate() - 1); // Considera todos os dias do mês para o primeiro mês
+        return diasNoMesInicio; // Retorna todos os dias do mês de início
     }
 
-    // Se for o último mês, calculamos os dias trabalhados até a data de término do contrato
-    if (currentDate.getMonth() === dataInicio.getMonth() && currentDate.getFullYear() === dataInicio.getFullYear()) {
-        return dataFinalRelatorio.getDate(); // Considera todos os dias até a data de término do contrato
+    // Considera todos os dias no mês para o cálculo do último mês
+    if (currentDate.getMonth() === validadeContrato.getMonth() && currentDate.getFullYear() === validadeContrato.getFullYear()) {
+        return dataInicio.getDate(); // Retorna todos os dias até a validade do contrato
     }
 
-    // Para os meses intermediários, consideramos o mês completo
+    // Para os meses intermediários, considera o mês completo
     return diasNoMesAtual;
 }
 
