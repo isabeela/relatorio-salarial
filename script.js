@@ -80,9 +80,6 @@ function gerarRelatorio() {
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     var isFirstMonth = true;
 
-    // Adicionando 1 mês ao mês de início
-    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
@@ -94,12 +91,9 @@ function gerarRelatorio() {
         var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
         var ano = dataInicioRelatorio.getFullYear();
 
-        // Usamos o mês anterior para o cálculo
-        var mesAnterior = new Date(dataInicioRelatorio);
-        mesAnterior.setMonth(mesAnterior.getMonth() - 1);
-        var diasNoMesAtual = diasNoMes(mesAnterior.getMonth(), mesAnterior.getFullYear());
+        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
 
-        var salarioProporcional = isFirstMonth ? calcularSalarioProporcional(mesAnterior.toLocaleDateString(), salario, diasNoMesAtual, isFirstMonth) : salario;
+        var salarioProporcional = calcularSalarioProporcional(dataInicioRelatorio.toLocaleDateString(), salario, diasNoMesAtual, isFirstMonth);
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mes + "/" + ano + "</td>" +
