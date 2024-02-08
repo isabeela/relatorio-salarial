@@ -106,7 +106,7 @@ function diasNoMes(month, year) {
 }
 
 function formatarSalario(valor) {
-        return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
