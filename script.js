@@ -111,11 +111,9 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
     }
 
-    // Calculando o salário proporcional para o último mês até a data de validade do contrato
-    var ultimoMesTrabalhado = new Date(dataFinalRelatorio);
-    ultimoMesTrabalhado.setMonth(ultimoMesTrabalhado.getMonth() - 1);
+    // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
-    var salarioValidade = calcularSalarioProporcional(ultimoMesTrabalhado.toLocaleDateString(), salario, diasTrabalhadosValidade);
+    var salarioValidade = calcularSalarioProporcional(validadeContrato, salario, diasTrabalhadosValidade, false);
     var proximoMesValidade = new Date(dataFinalRelatorio);
     proximoMesValidade.setMonth(proximoMesValidade.getMonth() + 1);
     var ultimoMes = (proximoMesValidade.getMonth() + 1).toString().padStart(2, '0');
