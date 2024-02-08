@@ -110,11 +110,19 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
+    // Verificando se estamos no último mês do relatório
+    var ultimoMes = (dataFinalRelatorio.getMonth() + 1).toString().padStart(2, '0');
+    var ultimoAno = dataFinalRelatorio.getFullYear();
+    if ((dataFinalRelatorio.getMonth() + 1) === 12) {
+        ultimoMes = '01'; // Se for o último mês, definimos o próximo mês como 01 (janeiro do próximo ano)
+        ultimoAno++;
+    }
+
     // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
     var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
     relatorioFinal += "<tr>" +
-        "<td>" + validadeContrato + "</td>" +
+        "<td>20/" + ultimoMes + "/" + ultimoAno + "</td>" +
         "<td>" + formatarSalario(salarioValidade) + "</td>" +
         "</tr>";
 
@@ -128,6 +136,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
