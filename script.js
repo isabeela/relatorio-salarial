@@ -45,19 +45,19 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes, isFirstMonth) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    if (dataInicio === document.getElementById('data-inicio').value) {
-        // Se for a data de início, retorna o próprio valor do salário
-        console.log("É a data de início");
-        return salario;
-    } else {
-        // Senão, retorna o valor proporcional calculado
+    
+    if (isFirstMonth) {
+        console.log("É o primeiro mês");
         var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
         console.log("Salário Proporcional:", salarioProporcional);
         return salarioProporcional;
+    } else {
+        console.log("Não é o primeiro mês");
+        return salario;
     }
 }
 
@@ -72,6 +72,7 @@ function gerarRelatorio() {
     
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
+    var isFirstMonth = true;
 
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
@@ -81,17 +82,18 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 2).toString().padStart(2, '0'); // Incrementa o mês em 1
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
         var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual, isFirstMonth);
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mes + "/" + ano + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Incrementa o mês em 1, mantendo o dia e o ano
+        isFirstMonth = false; // Atualizamos isFirstMonth para false após o primeiro mês
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
     relatorioFinal += "</table>" +
