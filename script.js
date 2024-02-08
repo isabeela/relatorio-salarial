@@ -115,6 +115,7 @@ function gerarRelatorio() {
     btnRelatorios.style.display = "block";
 }
 
+
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
     return new Date(year, month + 1, 0).getDate();
