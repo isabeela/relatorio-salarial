@@ -74,7 +74,7 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
+        var mes = (dataInicioRelatorio.getMonth() + 2).toString().padStart(2, '0'); // Incrementa o mês em 1
         var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
@@ -84,7 +84,7 @@ function gerarRelatorio() {
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Incrementa o mês em 1, mantendo o dia e o ano
     }
 
     relatorioFinal += "</table>" +
@@ -97,7 +97,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 
 
