@@ -55,7 +55,6 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
 }
 
 
-
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
@@ -75,18 +74,18 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio <= dataFinalRelatorio) {
-    var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
-    var ano = dataInicioRelatorio.getFullYear();
-    var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-    var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
+        var ano = dataInicioRelatorio.getFullYear();
+        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+        var salarioProporcional = calcularSalarioProporcional(dataInicioRelatorio, salario, diasNoMesAtual);
 
-    relatorioFinal += "<tr>" +
-        "<td>20/" + mes + "/" + ano + "</td>" +
-        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-        "</tr>";
-  
-      dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-  }
+        relatorioFinal += "<tr>" +
+            "<td>20/" + mes + "/" + ano + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "</tr>";
+      
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Adiciona um mês para o próximo ciclo
+    }
 
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
@@ -98,6 +97,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 // Função para obter o número de dias em um determinado mês
