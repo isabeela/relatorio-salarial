@@ -61,6 +61,12 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes, isFirstMont
     }
 }
 
+function calcularSalarioProporcionalValidadeContrato(dataValidade, salario, diasTrabalhados) {
+    var diaValidade = parseInt(dataValidade.split('/')[0]);
+    var salarioProporcional = (salario / 30) * diaValidade;
+    return salarioProporcional;
+}
+
 
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
@@ -104,6 +110,14 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
+    // Calculando o salário proporcional até a data de validade do contrato
+    var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
+    var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
+    relatorioFinal += "<tr>" +
+        "<td>" + validadeContrato + "</td>" +
+        "<td>" + formatarSalario(salarioValidade) + "</td>" +
+        "</tr>";
+
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
         "<p> Caso dia 20 caia no final de semana, o pagamento será efetuado no próximo dia útil </p>" +
@@ -114,7 +128,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
