@@ -74,6 +74,9 @@ function gerarRelatorio() {
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     var isFirstMonth = true;
 
+    // Adicionando 1 mês ao mês de início
+    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
