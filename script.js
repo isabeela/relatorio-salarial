@@ -108,24 +108,16 @@ function gerarRelatorio() {
 
         isFirstMonth = false; // Atualizamos isFirstMonth para false após o primeiro mês
 
-        // Verifica se a próxima data de pagamento está no mesmo mês da data de validade do contrato
-        var proximaData = new Date(dataInicioRelatorio);
-        proximaData.setMonth(proximaData.getMonth() + 1);
-        if (proximaData.getMonth() === dataFinalRelatorio.getMonth()) {
-            dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 2); // Avança para o próximo próximo mês
-        } else {
-            dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
-        }
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
     }
-
-    // Adiciona um mês extra após o último mês para exibir o resultado no mês seguinte no relatório
-    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
-    var ultimoMes = (dataFinalRelatorio.getMonth() + 1).toString().padStart(2, '0');
-    var ultimoAno = dataFinalRelatorio.getFullYear();
 
     // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
-    var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
+    var salarioValidade = calcularSalarioProporcional(validadeContrato, salario, diasTrabalhadosValidade);
+    var proximoMesValidade = new Date(dataFinalRelatorio);
+    proximoMesValidade.setMonth(proximoMesValidade.getMonth() + 1);
+    var ultimoMes = (proximoMesValidade.getMonth() + 1).toString().padStart(2, '0');
+    var ultimoAno = proximoMesValidade.getFullYear();
     relatorioFinal += "<tr>" +
         "<td>20/" + ultimoMes + "/" + ultimoAno + "</td>" +
         "<td>" + formatarSalario(salarioValidade) + "</td>" +
@@ -141,6 +133,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 // Função para obter o número de dias em um determinado mês
