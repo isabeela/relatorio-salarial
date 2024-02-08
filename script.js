@@ -106,8 +106,15 @@ function diasNoMes(month, year) {
 }
 
 function formatarSalario(valor) {
-    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    // Se o valor for um número inteiro, vamos adicionar .00 para garantir que ele tenha duas casas decimais
+    if (Number.isInteger(valor)) {
+        return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } else {
+        // Caso contrário, vamos apenas formatá-lo como moeda brasileira
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
 }
+
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
 function parseData(dataString) {
