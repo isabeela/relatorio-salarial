@@ -80,6 +80,9 @@ function gerarRelatorio() {
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     var isFirstMonth = true;
 
+    // Adicionando 1 mês ao mês de início
+    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
@@ -91,9 +94,12 @@ function gerarRelatorio() {
         var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
         var ano = dataInicioRelatorio.getFullYear();
 
-        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+        // Usamos o mês anterior para o cálculo
+        var mesAnterior = new Date(dataInicioRelatorio);
+        mesAnterior.setMonth(mesAnterior.getMonth() - 1);
+        var diasNoMesAtual = diasNoMes(mesAnterior.getMonth(), mesAnterior.getFullYear());
 
-        var salarioProporcional = calcularSalarioProporcional(dataInicioRelatorio.toLocaleDateString(), salario, diasNoMesAtual, isFirstMonth);
+        var salarioProporcional = isFirstMonth ? calcularSalarioProporcional(mesAnterior.toLocaleDateString(), salario, diasNoMesAtual, isFirstMonth) : salario;
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mes + "/" + ano + "</td>" +
@@ -101,17 +107,20 @@ function gerarRelatorio() {
             "</tr>";
 
         isFirstMonth = false; // Atualizamos isFirstMonth para false após o primeiro mês
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+    }
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
+    // Verificando se estamos no último mês do relatório
+    var ultimoMes = (dataFinalRelatorio.getMonth() + 1).toString().padStart(2, '0');
+    var ultimoAno = dataFinalRelatorio.getFullYear();
+    if ((dataFinalRelatorio.getMonth() + 1) === 12) {
+        ultimoMes = '01'; // Se for o último mês, definimos o próximo mês como 01 (janeiro do próximo ano)
+        ultimoAno++;
     }
 
     // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
-    var salarioValidade = calcularSalarioProporcional(validadeContrato, salario, diasTrabalhadosValidade, false);
-    var proximoMesValidade = new Date(dataFinalRelatorio);
-    proximoMesValidade.setMonth(proximoMesValidade.getMonth() + 1);
-    var ultimoMes = (proximoMesValidade.getMonth() + 1).toString().padStart(2, '0');
-    var ultimoAno = proximoMesValidade.getFullYear();
+    var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
     relatorioFinal += "<tr>" +
         "<td>20/" + ultimoMes + "/" + ultimoAno + "</td>" +
         "<td>" + formatarSalario(salarioValidade) + "</td>" +
@@ -127,8 +136,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
-
 
 
 // Função para obter o número de dias em um determinado mês
