@@ -107,7 +107,15 @@ function gerarRelatorio() {
             "</tr>";
 
         isFirstMonth = false; // Atualizamos isFirstMonth para false após o primeiro mês
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+
+        // Verifica se a próxima data de pagamento está no mesmo mês da data de validade do contrato
+        var proximaData = new Date(dataInicioRelatorio);
+        proximaData.setMonth(proximaData.getMonth() + 1);
+        if (proximaData.getMonth() === dataFinalRelatorio.getMonth()) {
+            dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 2); // Avança para o próximo próximo mês
+        } else {
+            dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
+        }
     }
 
     // Verificando se estamos no último mês do relatório
@@ -136,7 +144,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
