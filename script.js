@@ -121,14 +121,27 @@ function gerarRelatorio() {
     // Verificando se estamos no último mês do relatório
     var ultimoMes = (dataFinalRelatorio.getMonth() + 1).toString().padStart(2, '0');
     var ultimoAno = dataFinalRelatorio.getFullYear();
-    if ((dataFinalRelatorio.getMonth() + 1) === 12) {
-        ultimoMes = '01'; // Se for o último mês, definimos o próximo mês como 01 (janeiro do próximo ano)
-        ultimoAno++;
+
+    // Adicionando um mês ao último mês
+    var proximoMes = dataFinalRelatorio.getMonth() + 2; // Adiciona um mês
+    var proximoAno = dataFinalRelatorio.getFullYear();
+
+    if (proximoMes > 12) {
+        proximoMes -= 12; // Volta para janeiro
+        proximoAno++; // Avança para o próximo ano
     }
 
     // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
     var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
+
+    // Adicionando a última linha para o próximo mês
+    relatorioFinal += "<tr>" +
+        "<td>20/" + proximoMes.toString().padStart(2, '0') + "/" + proximoAno + "</td>" +
+        "<td>" + formatarSalario(salario) + "</td>" +
+        "</tr>";
+
+    // Adicionando a última linha para o mês atual
     relatorioFinal += "<tr>" +
         "<td>20/" + ultimoMes + "/" + ultimoAno + "</td>" +
         "<td>" + formatarSalario(salarioValidade) + "</td>" +
