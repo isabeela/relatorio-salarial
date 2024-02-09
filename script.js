@@ -1,27 +1,27 @@
 async function gerarPDF() {
-  const pdf = new window.jspdf.jsPDF();
-  const elementoRelatorio = document.getElementById('relatorio');
+    const pdf = new window.jspdf.jsPDF();
+    const elementoRelatorio = document.getElementById('relatorio');
 
-  // Use html2canvas para converter o HTML para uma imagem
-  const canvas = await window.html2canvas(elementoRelatorio);
+    // Use html2canvas para converter o HTML para uma imagem
+    const canvas = await window.html2canvas(elementoRelatorio);
 
-  // Adicione a imagem convertida ao PDF
-  pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 15);
+    // Adicione a imagem convertida ao PDF
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 15);
 
-  // Salve o PDF
-  pdf.save('relatorio.pdf');
+    // Salve o PDF
+    pdf.save('relatorio.pdf');
 }
 
 function formatarData(inputValue) {
     inputValue = inputValue.replace(/\D/g, ''); // Remove caracteres não numéricos
-  
+
     if (inputValue.length > 2) {
-      inputValue = inputValue.replace(/(\d{2})(\d)/, "$1/$2");
+        inputValue = inputValue.replace(/(\d{2})(\d)/, "$1/$2");
     }
     if (inputValue.length > 4) {
-      inputValue = inputValue.replace(/(\d{2})(\d)/, "$1/$2");
+        inputValue = inputValue.replace(/(\d{2})(\d)/, "$1/$2");
     }
-  
+
     // Limita o comprimento total a 10 caracteres
     return inputValue.slice(0, 10);
 }
@@ -36,11 +36,11 @@ function formatarDinheiro(input) {
     // Atualiza o valor no campo de entrada
     input.value = value;
 }
-  
+
 document.getElementById('data-inicio').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
 });
-  
+
 document.getElementById('validade-contrato').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
 });
@@ -49,7 +49,7 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes, isFirstMont
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    
+
     if (isFirstMonth + 1) {
         console.log("É o primeiro mês");
         var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
@@ -67,7 +67,6 @@ function calcularSalarioProporcionalValidadeContrato(dataValidade, salario, dias
     return salarioProporcional;
 }
 
-
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
@@ -75,7 +74,7 @@ function gerarRelatorio() {
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
-    
+
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     var isFirstMonth = true;
@@ -121,27 +120,14 @@ function gerarRelatorio() {
     // Verificando se estamos no último mês do relatório
     var ultimoMes = (dataFinalRelatorio.getMonth() + 1).toString().padStart(2, '0');
     var ultimoAno = dataFinalRelatorio.getFullYear();
-
-    // Adicionando um mês ao último mês
-    var proximoMes = dataFinalRelatorio.getMonth() + 2; // Adiciona um mês
-    var proximoAno = dataFinalRelatorio.getFullYear();
-
-    if (proximoMes > 12) {
-        proximoMes -= 12; // Volta para janeiro
-        proximoAno++; // Avança para o próximo ano
+    if ((dataFinalRelatorio.getMonth() + 1) === 12) {
+        ultimoMes = '01'; // Se for o último mês, definimos o próximo mês como 01 (janeiro do próximo ano)
+        ultimoAno++;
     }
 
     // Calculando o salário proporcional até a data de validade do contrato
     var diasTrabalhadosValidade = parseInt(validadeContrato.split('/')[0]);
     var salarioValidade = calcularSalarioProporcionalValidadeContrato(validadeContrato, salario, diasTrabalhadosValidade);
-
-    // Adicionando a última linha para o próximo mês
-    relatorioFinal += "<tr>" +
-        "<td>20/" + proximoMes.toString().padStart(2, '0') + "/" + proximoAno + "</td>" +
-        "<td>" + formatarSalario(salario) + "</td>" +
-        "</tr>";
-
-    // Adicionando a última linha para o mês atual
     relatorioFinal += "<tr>" +
         "<td>20/" + ultimoMes + "/" + ultimoAno + "</td>" +
         "<td>" + formatarSalario(salarioValidade) + "</td>" +
@@ -163,11 +149,10 @@ function diasNoMes(month, year) {
     return new Date(year, month + 1, 0).getDate();
 }
 
- function formatarSalario(valor) {
+function formatarSalario(valor) {
     valor = valor * 1000
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
-
+}
 
 // Função para analisar a string de data no formato DD/MM/AAAA e retornar um objeto Date
 function parseData(dataString) {
