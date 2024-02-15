@@ -65,6 +65,7 @@ function gerarRelatorio() {
     
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
+    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
 
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
@@ -85,7 +86,7 @@ function gerarRelatorio() {
             "</tr>";
 
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-        dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);// Incrementa o mês em 1, mantendo o dia e o ano
+       
     }
 
     relatorioFinal += "</table>" +
