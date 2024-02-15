@@ -47,10 +47,7 @@ document.getElementById('validade-contrato').addEventListener('input', function 
 
 function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
-    console.log("Dia de Início:", diaInicio);
-    console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
-    console.log("Salário Proporcional:", salarioProporcional);
+    var salarioProporcional = (salario / diasNoMes) * (diasNoMes - diaInicio + 1);
     return salarioProporcional;
 }
 
@@ -65,7 +62,6 @@ function gerarRelatorio() {
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
-    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
 
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
