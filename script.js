@@ -54,13 +54,10 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     return salarioProporcional;
 }
 
-
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
-    console.log("Dia de Início:", diaInicio);
-    console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = (salario / diasNoMes) * (diasNoMes - diaInicio + 1);
-    console.log("Salário Proporcional:", salarioProporcional);
+    var diasRestantes = diasNoMesInicio - diaInicio + 1;
+    var salarioProporcional = (salario / diasNoMesInicio) * diasRestantes;
     return salarioProporcional;
 }
 
@@ -87,8 +84,8 @@ function gerarRelatorio() {
     while (dataInicioRelatorio < dataFinalRelatorio) {
         var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Obtém o mês atual
         var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
+        var diasNoMesInicio = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mes + "/" + ano + "</td>" +
@@ -108,6 +105,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 
