@@ -62,7 +62,7 @@ function gerarRelatorio() {
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
-    
+
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
     dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
@@ -74,8 +74,8 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
-    while (dataInicioRelatorio <= dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 2).toString().padStart(2, '0'); // Incrementa o mês em 1
+    while (dataInicioRelatorio < dataFinalRelatorio) {
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Obtém o mês atual
         var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
@@ -86,7 +86,6 @@ function gerarRelatorio() {
             "</tr>";
 
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-       
     }
 
     relatorioFinal += "</table>" +
@@ -99,9 +98,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
-
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
