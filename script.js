@@ -76,15 +76,20 @@ function gerarRelatorio() {
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         // Adiciona um mês para exibir no relatório
-        var mesRelatorio = mesInicio % 12 + 1; // Mês subsequente, tratando dezembro como 12
-        var anoRelatorio = ano + Math.floor((mesInicio + 1) / 13); // Incrementa o ano, se necessário
+        var mesRelatorio = mesInicio + 1;
+        var anoRelatorio = ano;
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
+        }
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
+        // Avança para o próximo mês de início
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
     relatorioFinal += "</table>" +
@@ -94,6 +99,7 @@ function gerarRelatorio() {
 
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
+    // Esconde o formulário de geração de relatório e mostra o botão de voltar
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
