@@ -49,7 +49,7 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio);
+    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
     console.log("Salário Proporcional:", salarioProporcional);
     return salarioProporcional;
 }
@@ -76,15 +76,7 @@ function gerarRelatorio() {
         var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
         var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
-
-        var salarioProporcional = 0;
-        if (dataInicioRelatorio.getMonth() == dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() == dataFinalRelatorio.getFullYear()) {
-            // Último mês: calcular proporcional até a data final
-            salarioProporcional = calcularSalarioProporcional(dataInicio, salario, dataFinalRelatorio.getDate());
-        } else {
-            // Demais meses: calcular proporcional pelo mês inteiro
-            salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
-        }
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         // Adiciona um mês para exibir no relatório
         var mesRelatorio = mesInicio;
@@ -110,7 +102,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 
 // Função para obter o número de dias em um determinado mês
