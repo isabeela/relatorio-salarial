@@ -61,10 +61,10 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio) {
     return salarioProporcional;
 }
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
-    var diasRestantes = diasNoMesInicio - diaInicio + 1;
-    var salarioProporcional = (salario / diasNoMesInicio) * diasRestantes;
+    var diasRestantes = diasNoMes - diaInicio + 1;
+    var salarioProporcional = (salario / diasNoMes) * diasRestantes;
     return salarioProporcional;
 }
 
@@ -89,18 +89,17 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio < dataFinalRelatorio) {
-        var mesInicio = dataInicioRelatorio.getMonth(); // Mês inicial informado pelo usuário
-        var mes = ((dataInicioRelatorio.getMonth() + 1) % 12).toString().padStart(2, '0'); // Obtém o mês atual
+        var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
         var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesInicio = diasNoMes(mesInicio, dataInicioRelatorio.getFullYear());
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
+        var diasNoMes = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear()); // Dias no mês de início
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes);
 
         relatorioFinal += "<tr>" +
-            "<td>20/" + mes + "/" + ano + "</td>" +
+            "<td>20/" + mesInicio + "/" + ano + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Avança para o próximo mês
     }
 
     relatorioFinal += "</table>" +
@@ -113,10 +112,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
-
-
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
