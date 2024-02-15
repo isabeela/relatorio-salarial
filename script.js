@@ -44,11 +44,13 @@ document.getElementById('data-inicio').addEventListener('input', function (e) {
 document.getElementById('validade-contrato').addEventListener('input', function (e) {
     e.target.value = formatarData(e.target.value);
 });
+
 function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
-    var salarioProporcional = (salario / diasNoMes) * (diasNoMes - diaInicio + 1);
+    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio);
     return salarioProporcional;
 }
+
 
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
