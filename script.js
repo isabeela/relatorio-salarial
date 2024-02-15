@@ -91,8 +91,8 @@ function gerarRelatorio() {
     while (dataInicioRelatorio < dataFinalRelatorio) {
         var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
         var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMes = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear()); // Dias no mês de início
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes);
+        var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mesInicio + "/" + ano + "</td>" +
@@ -112,6 +112,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
