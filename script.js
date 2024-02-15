@@ -60,7 +60,6 @@ function gerarRelatorio() {
 
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
-    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
 
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
@@ -103,7 +102,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
