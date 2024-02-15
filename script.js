@@ -59,34 +59,45 @@ function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
     var validadeContrato = document.getElementById('validade-contrato').value;
+    var dataFinalContrato = document.getElementById('data-final-contrato').value; // Adicionado novo campo
     var salario = parseFloat(document.getElementById('salario').value.replace(/[^\d.-]/g, ''));
     var gerarRelatorio = document.querySelector('.container');
     var btnRelatorios = document.querySelector('.btn-relatorios');
-    
+
     var dataInicioRelatorio = new Date(parseData(dataInicio));
     var dataFinalRelatorio = new Date(parseData(validadeContrato));
-    dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);
 
     var relatorioFinal = "<h2>Relatório de Remuneração - " + nome + "</h2>" +
         "<table>" +
         "<tr>" +
         "<th>Data de Pagamento</th>" +
         "<th>Valor Mensal</th>" +
+        "<th>Valor a Receber</th>" +
         "</tr>";
 
-    while (dataInicioRelatorio <= dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 2).toString().padStart(2, '0'); // Incrementa o mês em 1
+    while (dataInicioRelatorio < dataFinalRelatorio) {
+        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0');
         var ano = dataInicioRelatorio.getFullYear();
         var diasNoMesAtual = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesAtual);
 
+        var valorReceber = 0; // Inicializa o valor a receber como zero
+
+        if (dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear()) {
+            // Se for o último mês do contrato, calcula o valor proporcional até a data final do contrato
+            valorReceber = (salario / 30) * parseInt(dataFinalContrato.split('/')[0]);
+        } else {
+            // Caso contrário, calcula o valor proporcional para o mês completo
+            valorReceber = salario;
+        }
+
         relatorioFinal += "<tr>" +
             "<td>20/" + mes + "/" + ano + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "<td>" + formatarSalario(valorReceber) + "</td>" +
             "</tr>";
 
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-       
     }
 
     relatorioFinal += "</table>" +
