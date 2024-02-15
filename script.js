@@ -55,6 +55,15 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
 }
 
 
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
+    var diaInicio = parseInt(dataInicio.split('/')[0]);
+    console.log("Dia de Início:", diaInicio);
+    console.log("Dias no Mês:", diasNoMes);
+    var salarioProporcional = (salario / diasNoMes) * (diasNoMes - diaInicio + 1);
+    console.log("Salário Proporcional:", salarioProporcional);
+    return salarioProporcional;
+}
+
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
@@ -99,6 +108,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 // Função para obter o número de dias em um determinado mês
