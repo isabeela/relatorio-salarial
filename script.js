@@ -84,7 +84,8 @@ function gerarRelatorio() {
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
 
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1); // Incrementa o mês em 1, mantendo o dia e o ano
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+        dataFinalRelatorio.setMonth(dataFinalRelatorio.getMonth() + 1);// Incrementa o mês em 1, mantendo o dia e o ano
     }
 
     relatorioFinal += "</table>" +
