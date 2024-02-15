@@ -61,6 +61,13 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio) {
     return salarioProporcional;
 }
 
+function calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio) {
+    var diaInicio = parseInt(dataInicio.split('/')[0]);
+    var diasRestantes = diasNoMesInicio - diaInicio + 1;
+    var salarioProporcional = (salario / diasNoMesInicio) * diasRestantes;
+    return salarioProporcional;
+}
+
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
@@ -82,9 +89,10 @@ function gerarRelatorio() {
         "</tr>";
 
     while (dataInicioRelatorio < dataFinalRelatorio) {
-        var mes = (dataInicioRelatorio.getMonth() + 1).toString().padStart(2, '0'); // Obtém o mês atual
+        var mesInicio = dataInicioRelatorio.getMonth(); // Mês inicial informado pelo usuário
+        var mes = ((dataInicioRelatorio.getMonth() + 1) % 12).toString().padStart(2, '0'); // Obtém o mês atual
         var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesInicio = diasNoMes(dataInicioRelatorio.getMonth(), dataInicioRelatorio.getFullYear());
+        var diasNoMesInicio = diasNoMes(mesInicio, dataInicioRelatorio.getFullYear());
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         relatorioFinal += "<tr>" +
@@ -105,6 +113,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 
