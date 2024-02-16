@@ -88,14 +88,22 @@ function gerarRelatorio() {
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao);
         primeiraIteracao = false;
     
+        var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
+        var anoRelatorio = ano;
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
+        }
+    
         relatorioFinal += "<tr>" +
-            "<td>20/" + mes + "/" + ano + "</td>" +
+            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
     
         // Adiciona um mês para exibir no relatório
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
+
 
   
 
