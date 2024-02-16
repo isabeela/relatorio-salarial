@@ -79,8 +79,12 @@ function gerarRelatorio() {
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
 
         // Adiciona um mês para exibir no relatório
-        var mesRelatorio = mesInicio;
+        var mesRelatorio = mesInicio + 1;
         var anoRelatorio = ano;
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
+        }
 
         relatorioFinal += "<tr>" +
             "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
@@ -102,7 +106,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
