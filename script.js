@@ -49,9 +49,14 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
+    if  dataInicio == dataInicioRelatorio {
+      var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
     console.log("Salário Proporcional:", salarioProporcional);
     return salarioProporcional;
+    }
+      else {
+        var salarioProporcional = salario
+    }
 }
 
 function gerarRelatorio() {
