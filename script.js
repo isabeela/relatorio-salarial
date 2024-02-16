@@ -72,28 +72,36 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
+    // Adiciona o primeiro valor com a data de início
+    var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
+    var anoInicio = dataInicioRelatorio.getFullYear();
+    var diasNoMesInicio = new Date(anoInicio, mesInicio, 0).getDate(); // Dias no mês de início
+    var salarioProporcionalInicio = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
+    relatorioFinal += "<tr>" +
+        "<td>" + dataInicio + "</td>" +
+        "<td>" + formatarSalario(salarioProporcionalInicio) + "</td>" +
+        "</tr>";
+
+    // Adiciona os valores intermediários com o salário digitado pelo usuário
     while (dataInicioRelatorio < dataFinalRelatorio) {
-        var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+        var mes = dataInicioRelatorio.getMonth() + 1;
         var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
-
-        // Adiciona um mês para exibir no relatório
-        var mesRelatorio = mesInicio + 1;
-        var anoRelatorio = ano;
-        if (mesRelatorio > 12) {
-            mesRelatorio = 1;
-            anoRelatorio++;
-        }
-
+        var diasNoMes = new Date(ano, mes, 0).getDate();
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes);
         relatorioFinal += "<tr>" +
-            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
+            "<td>20/" + mes + "/" + ano + "</td>" +
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
-
-        // Avança para o próximo mês de início
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
+
+    // Adiciona o último valor com a validade do contrato
+    var diasNoMesFinal = new Date(dataFinalRelatorio.getFullYear(), dataFinalRelatorio.getMonth() + 1, 0).getDate();
+    var salarioProporcionalFinal = calcularSalarioProporcional(dataInicio, salario, diasNoMesFinal);
+    relatorioFinal += "<tr>" +
+        "<td>" + validadeContrato + "</td>" +
+        "<td>" + formatarSalario(salarioProporcionalFinal) + "</td>" +
+        "</tr>";
 
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
@@ -106,6 +114,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
     return new Date(year, month + 1, 0).getDate();
