@@ -88,14 +88,11 @@ function gerarRelatorio() {
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao);
         primeiraIteracao = false;
     
-        var mesRelatorio = mes;
+        var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
         var anoRelatorio = ano;
-        if (dataFinalRelatorio.getMonth() > mes) {
-            mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
-            if (mesRelatorio > 12) {
-                mesRelatorio = 1;
-                anoRelatorio++;
-            }
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
         }
     
         relatorioFinal += "<tr>" +
@@ -107,13 +104,20 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
     
-
-  
-
-    relatorioFinal += "</table>" +
-        "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
-        "<p> Caso dia 20 caia no final de semana, o pagamento será efetuado no próximo dia útil </p>" +
-        "<p> * Valores salariais sujeitos a alterações </p>";
+    // Adicionar o último mês do contrato ao relatório
+    var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
+    var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
+    var ultimoMesRelatorio = ultimoMesContrato + 1; // Próximo mês para exibição no relatório
+    var ultimoAnoRelatorio = ultimoAnoContrato;
+    if (ultimoMesRelatorio > 12) {
+        ultimoMesRelatorio = 1;
+        ultimoAnoRelatorio++;
+    }
+    
+    relatorioFinal += "<tr>" +
+        "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
+        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+        "</tr>";
 
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
