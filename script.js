@@ -45,14 +45,21 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes, dataAtual) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
-    console.log("Salário Proporcional:", salarioProporcional);
-    return salarioProporcional;
+    
+    if (dataAtual.getTime() === new Date(dataInicio).getTime()) {
+        var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
+        console.log("Salário Proporcional:", salarioProporcional);
+        return salarioProporcional;
+    } else {
+        console.log("Salário Proporcional:", salario);
+        return salario;
+    }
 }
+
 
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
@@ -72,11 +79,11 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
-    while (dataInicioRelatorio < dataFinalRelatorio) {
-        var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
-        var ano = dataInicioRelatorio.getFullYear();
-        var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio);
+     while (dataInicioRelatorio < dataFinalRelatorio) {
+      var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
+      var ano = dataInicioRelatorio.getFullYear();
+      var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
+      var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio, dataInicioRelatorio);
 
         // Adiciona um mês para exibir no relatório
         var mesRelatorio = mesInicio + 1;
