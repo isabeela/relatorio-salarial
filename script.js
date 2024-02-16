@@ -79,28 +79,28 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
-     while (dataInicioRelatorio < dataFinalRelatorio) {
-      var mesInicio = dataInicioRelatorio.getMonth() + 1; // Mês de início
-      var ano = dataInicioRelatorio.getFullYear();
-      var diasNoMesInicio = new Date(ano, mesInicio, 0).getDate(); // Dias no mês de início
-      var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio, dataInicioRelatorio);
-
-        // Adiciona um mês para exibir no relatório
-        var mesRelatorio = mesInicio + 1;
-        var anoRelatorio = ano;
-        if (mesRelatorio > 12) {
-            mesRelatorio = 1;
-            anoRelatorio++;
-        }
-
-        relatorioFinal += "<tr>" +
-            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
-            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-            "</tr>";
-
-        // Avança para o próximo mês de início
-        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-    }
+          while (dataInicioRelatorio < dataFinalRelatorio) {
+          var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
+          var ano = dataInicioRelatorio.getFullYear();
+      
+          var salarioProporcional;
+          if (dataInicioRelatorio.getTime() === new Date(dataInicio).getTime()) {
+              // Se for a primeira iteração, usa a data de início
+              var diasNoMesInicio = new Date(ano, mes, 0).getDate(); // Dias no mês de início
+              salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio, dataInicioRelatorio);
+          } else {
+              var diasNoMes = new Date(ano, mes, 0).getDate();
+              salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, dataInicioRelatorio);
+          }
+      
+          relatorioFinal += "<tr>" +
+              "<td>20/" + mes + "/" + ano + "</td>" +
+              "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+              "</tr>";
+      
+          // Adiciona um mês para exibir no relatório
+          dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+      }
 
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
