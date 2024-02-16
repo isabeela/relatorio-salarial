@@ -45,12 +45,12 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes, dataInicioRelatorio) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
     
-    if (dataInicioRelatorio.getTime() === new Date(dataInicio).getTime()) {
+    if (primeiraIteracao) {
         var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
         console.log("Salário Proporcional:", salarioProporcional);
         return salarioProporcional;
@@ -79,29 +79,25 @@ function gerarRelatorio() {
         "<th>Data de Pagamento</th>" +
         "<th>Valor Mensal</th>" +
         "</tr>";
+    var primeiraIteracao = true;
+    while (dataInicioRelatorio < dataFinalRelatorio) {
+        var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
+        var ano = dataInicioRelatorio.getFullYear();
+    
+        var diasNoMes = new Date(ano, mes, 0).getDate();
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao);
+        primeiraIteracao = false;
+    
+        relatorioFinal += "<tr>" +
+            "<td>20/" + mes + "/" + ano + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "</tr>";
+    
+        // Adiciona um mês para exibir no relatório
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
+    }
 
-          while (dataInicioRelatorio < dataFinalRelatorio) {
-          var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
-          var ano = dataInicioRelatorio.getFullYear();
-      
-          var salarioProporcional;
-          if (dataInicioRelatorio.getTime() === new Date(dataInicio).getTime()) {
-              // Se for a primeira iteração, usa a data de início
-              var diasNoMesInicio = new Date(ano, mes, 0).getDate(); // Dias no mês de início
-              salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMesInicio, dataInicioRelatorio);
-          } else {
-              var diasNoMes = new Date(ano, mes, 0).getDate();
-              salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, dataInicioRelatorio);
-          }
-      
-          relatorioFinal += "<tr>" +
-              "<td>20/" + mes + "/" + ano + "</td>" +
-              "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-              "</tr>";
-      
-          // Adiciona um mês para exibir no relatório
-          dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-      }
+  
 
     relatorioFinal += "</table>" +
         "<p> Favor enviar sua nota fiscal até 5 dias antes do pagamento </p>" +
