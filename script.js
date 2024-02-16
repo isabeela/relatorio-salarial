@@ -79,15 +79,14 @@ function gerarRelatorio() {
         "<th>Data de Pagamento</th>" +
         "<th>Valor Mensal</th>" +
         "</tr>";
-      // Verifica se a data de início é no dia 20 ou posterior
-    var diaInicio = parseInt(dataInicio.split('/')[0]);
-    var ajustarUltimoMes = diaInicio >= 20;
-    
+     // Verifica se a data de início está antes do dia 20 do mês
+    var mesInicio = dataInicioRelatorio.getDate() < 20 ? dataInicioRelatorio.getMonth() + 1 : dataInicioRelatorio.getMonth() + 2;
+    var anoInicio = dataInicioRelatorio.getFullYear() + (mesInicio > 12 ? 1 : 0);
+
     var primeiraIteracao = true;
     while (dataInicioRelatorio < dataFinalRelatorio) {
-        var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
-        var ano = dataInicioRelatorio.getFullYear();
-    
+        var mes = mesInicio; // Mês atual
+        var ano = anoInicio; // Ano atual   
         var diasNoMes = new Date(ano, mes, 0).getDate();
         var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao);
         primeiraIteracao = false;
