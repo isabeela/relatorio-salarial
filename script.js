@@ -45,28 +45,14 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes, dataInicioRelatorio) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
-    var salarioProporcional = salario;
-  
-    var diaInicioRelatorio = dataInicioRelatorio.getDate();
-    var mesInicioRelatorio = dataInicioRelatorio.getMonth() + 1;
-    var anoInicioRelatorio = dataInicioRelatorio.getFullYear();
-    var dataInicioRelatorioFormatada = diaInicioRelatorio.toString().padStart(2, '0') + '/' + mesInicioRelatorio.toString().padStart(2, '0') + '/' + anoInicioRelatorio;
-
-    if (dataInicio === dataInicioRelatorioFormatada) {
-        salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
-        console.log("Salário Proporcional:", salarioProporcional);
-    }
-    
+    var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
+    console.log("Salário Proporcional:", salarioProporcional);
     return salarioProporcional;
 }
-
-
-
-
 
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
@@ -120,7 +106,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
     return new Date(year, month + 1, 0).getDate();
