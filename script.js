@@ -113,6 +113,7 @@ function gerarRelatorio() {
             ultimoMesRelatorio = 1;
             ultimoAnoRelatorio++;
         }
+       }
         
         relatorioFinal += "<tr>" +
             "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
