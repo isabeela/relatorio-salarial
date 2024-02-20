@@ -104,7 +104,7 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
     
-    // Adicionar o último mês do contrato ao relatório
+   if (dataInicioRelatorio.getMonth() !== dataFinalRelatorio.getMonth() || dataInicioRelatorio.getFullYear() !== dataFinalRelatorio.getFullYear()) {
     var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
     var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
     var ultimoMesRelatorio = ultimoMesContrato + 1; // Próximo mês para exibição no relatório
