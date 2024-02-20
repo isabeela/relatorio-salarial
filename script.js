@@ -103,27 +103,35 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
-    // Adiciona o último mês do contrato ao relatório apenas uma vez
-    var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
-    var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
-    var ultimoMesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
-    var ultimoAnoRelatorio = ultimoAnoContrato;
-    if (ultimoMesRelatorio > 12) {
-        ultimoMesRelatorio = 1;
-        ultimoAnoRelatorio++;
+       // Adiciona o último mês do contrato ao relatório apenas uma vez
+        var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
+        var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
+    
+        var mesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
+        var anoRelatorio = ultimoAnoContrato;
+    
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
+        }
+    
+        relatorioFinal += "<tr>" +
+            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "</tr>";
+    
+        // Fecha a tabela
+        relatorioFinal += "</table>";
+    
+        document.getElementById('relatorio').innerHTML = relatorioFinal;
+    
+        // Esconde o formulário de geração de relatório e mostra o botão de voltar
+        gerarRelatorio.style.display = "none";
+        btnRelatorios.style.display = "block";
     }
 
-    relatorioFinal += "<tr>" +
-        "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
-        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-        "</tr>";
-
-    document.getElementById('relatorio').innerHTML = relatorioFinal;
-
-    // Esconde o formulário de geração de relatório e mostra o botão de voltar
-    gerarRelatorio.style.display = "none";
-    btnRelatorios.style.display = "block";
-}
+    
+  
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
