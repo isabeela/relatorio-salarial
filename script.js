@@ -97,6 +97,7 @@ function gerarRelatorio() {
             "</tr>";
     }
 
+
     var primeiraIteracao = true;
     while (dataInicioRelatorio < dataFinalRelatorio) {
         var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
