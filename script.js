@@ -60,8 +60,6 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIte
     }
 }
 
-
-
 function gerarRelatorio() {
     var nome = document.getElementById('nome').value;
     var dataInicio = document.getElementById('data-inicio').value;
@@ -79,25 +77,6 @@ function gerarRelatorio() {
         "<th>Data de Pagamento</th>" +
         "<th>Valor Mensal</th>" +
         "</tr>";
-
-    // Adiciona o último mês do contrato ao relatório, se a data não for duplicada
-    if (dataInicioRelatorio.getMonth() !== dataFinalRelatorio.getMonth() || dataInicioRelatorio.getFullYear() !== dataFinalRelatorio.getFullYear() || (dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear() && dataInicioRelatorio.getDate() !== 20)) {
-        var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
-        var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
-        var ultimoMesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
-        var ultimoAnoRelatorio = ultimoAnoContrato;
-        if (ultimoMesRelatorio > 12) {
-            ultimoMesRelatorio = 1;
-            ultimoAnoRelatorio++;
-        }
-    
-        relatorioFinal += "<tr>" +
-            "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
-            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-            "</tr>";
-    }
-
-
 
     var primeiraIteracao = true;
     while (dataInicioRelatorio < dataFinalRelatorio) {
@@ -123,6 +102,21 @@ function gerarRelatorio() {
         // Adiciona um mês para exibir no relatório
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
+
+    // Adiciona o último mês do contrato ao relatório apenas uma vez
+    var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
+    var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
+    var ultimoMesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
+    var ultimoAnoRelatorio = ultimoAnoContrato;
+    if (ultimoMesRelatorio > 12) {
+        ultimoMesRelatorio = 1;
+        ultimoAnoRelatorio++;
+    }
+
+    relatorioFinal += "<tr>" +
+        "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
+        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+        "</tr>";
 
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
