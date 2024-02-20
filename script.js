@@ -79,12 +79,15 @@ function gerarRelatorio() {
         "</tr>";
 
     var primeiraIteracao = true;
+    var salarioProporcional = salario; // Inicializa o valor do salário proporcional com o salário normal
     while (dataInicioRelatorio < dataFinalRelatorio) {
         var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
         var ano = dataInicioRelatorio.getFullYear();
 
         var diasNoMes = new Date(ano, mes, 0).getDate();
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao);
+        if (!primeiraIteracao) {
+            salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes);
+        }
         primeiraIteracao = false;
 
         var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
@@ -103,20 +106,22 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
-    // Adiciona o último mês do contrato ao relatório apenas uma vez
-    var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
-    var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
-    var ultimoMesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
-    var ultimoAnoRelatorio = ultimoAnoContrato;
-    if (ultimoMesRelatorio > 12) {
-        ultimoMesRelatorio = 1;
-        ultimoAnoRelatorio++;
+    // Adiciona a última data do contrato ao relatório apenas se ela não tiver sido adicionada
+    var mesFinal = dataFinalRelatorio.getMonth() + 1; // Mês final do contrato
+    var anoFinal = dataFinalRelatorio.getFullYear();
+    var mesFinalRelatorio = mesFinal + 1; // Próximo mês para exibição no relatório
+    var anoFinalRelatorio = anoFinal;
+    if (mesFinalRelatorio > 12) {
+        mesFinalRelatorio = 1;
+        anoFinalRelatorio++;
     }
 
-    relatorioFinal += "<tr>" +
-        "<td>20/" + ultimoMesRelatorio + "/" + ultimoAnoRelatorio + "</td>" +
-        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-        "</tr>";
+    if (mesFinal !== mes || anoFinal !== ano) {
+        relatorioFinal += "<tr>" +
+            "<td>20/" + mesFinalRelatorio + "/" + anoFinalRelatorio + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "</tr>";
+    }
 
     document.getElementById('relatorio').innerHTML = relatorioFinal;
 
@@ -124,6 +129,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 // Função para obter o número de dias em um determinado mês
 function diasNoMes(month, year) {
