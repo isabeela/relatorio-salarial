@@ -81,7 +81,7 @@ function gerarRelatorio() {
         "</tr>";
 
     // Adiciona o último mês do contrato ao relatório, se a data não for duplicada
-    if (dataInicioRelatorio.getMonth() !== dataFinalRelatorio.getMonth() || dataInicioRelatorio.getFullYear() !== dataFinalRelatorio.getFullYear()) {
+    if (dataInicioRelatorio.getMonth() !== dataFinalRelatorio.getMonth() || dataInicioRelatorio.getFullYear() !== dataFinalRelatorio.getFullYear() || (dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear() && dataInicioRelatorio.getDate() !== 20)) {
         var ultimoMesContrato = dataFinalRelatorio.getMonth() + 1;
         var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
         var ultimoMesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
@@ -96,6 +96,7 @@ function gerarRelatorio() {
             "<td>" + formatarSalario(salarioProporcional) + "</td>" +
             "</tr>";
     }
+
 
 
     var primeiraIteracao = true;
