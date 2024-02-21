@@ -103,17 +103,17 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
-       // Adiciona o último mês do contrato ao relatório apenas uma vez
-        var ultimoMesContrato = dataFinalRelatorio.getMonth();
-        var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
+       // // Adiciona o último mês do contrato ao relatório apenas uma vez
+       //  var ultimoMesContrato = dataFinalRelatorio.getMonth();
+       //  var ultimoAnoContrato = dataFinalRelatorio.getFullYear();
     
-        var mesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
-        var anoRelatorio = ultimoAnoContrato;
+       //  var mesRelatorio = ultimoMesContrato; // Próximo mês para exibição no relatório
+       //  var anoRelatorio = ultimoAnoContrato;
     
-        if (mesRelatorio > 12) {
-            mesRelatorio = 1;
-            anoRelatorio++;
-        }
+       //  if (mesRelatorio > 12) {
+       //      mesRelatorio = 1;
+       //      anoRelatorio++;
+       //  }
     
         relatorioFinal += "<tr>" +
             "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
