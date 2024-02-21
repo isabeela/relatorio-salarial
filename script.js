@@ -59,6 +59,7 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIte
     } else if (ultimaIteracao) {
         console.log("Dia Final do Relatório:", diaFim);
         var salarioProporcional = salario / 30 * diaFim;
+        salarioProporcional = Math.min(salarioProporcional, salario); // Limitar o salário proporcional ao valor total do salário
         console.log("Salário Proporcional (Última Iteração):", salarioProporcional);
         return salarioProporcional;
     } else {
