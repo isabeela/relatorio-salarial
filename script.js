@@ -82,32 +82,32 @@ function gerarRelatorio() {
         "<th>Valor Mensal</th>" +
         "</tr>";
 
-    var primeiraIteracao = true;
-    while (dataInicioRelatorio <= dataFinalRelatorio) {
-    var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
-    var ano = dataInicioRelatorio.getFullYear();
-
-    var diasNoMes = new Date(ano, mes, 0).getDate();
-    var ultimaIteracao = dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear();
-
-    var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao, ultimaIteracao);
-    primeiraIteracao = false;
-
-    var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
-    var anoRelatorio = ano;
-    if (mesRelatorio > 12) {
-        mesRelatorio = 1;
-        anoRelatorio++;
+        var primeiraIteracao = true;
+        while (dataInicioRelatorio <= dataFinalRelatorio) {
+        var mes = dataInicioRelatorio.getMonth() + 1; // Mês atual
+        var ano = dataInicioRelatorio.getFullYear();
+    
+        var diasNoMes = new Date(ano, mes, 0).getDate();
+        var ultimaIteracao = dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear();
+    
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao, ultimaIteracao);
+        primeiraIteracao = false;
+    
+        var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
+        var anoRelatorio = ano;
+        if (mesRelatorio > 12) {
+            mesRelatorio = 1;
+            anoRelatorio++;
+        }
+    
+        relatorioFinal += "<tr>" +
+            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
+            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+            "</tr>";
+    
+        // Adiciona um mês para exibir no relatório
+        dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
-
-    relatorioFinal += "<tr>" +
-        "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
-        "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-        "</tr>";
-
-    // Adiciona um mês para exibir no relatório
-    dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
-}
 
 
         relatorioFinal += "<tr>" +
