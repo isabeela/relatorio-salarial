@@ -93,7 +93,7 @@ function gerarRelatorio() {
         var diasNoMes = new Date(ano, mes, 0).getDate();
         var ultimaIteracao = dataInicioRelatorio.getMonth() === dataFinalRelatorio.getMonth() && dataInicioRelatorio.getFullYear() === dataFinalRelatorio.getFullYear();
 
-        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao, ultimaIteracao);
+        var salarioProporcional = calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao, ultimaIteracao, dataFinalRelatorio); // Adicione dataFinalRelatorio como parâmetro aqui
         primeiraIteracao = false;
 
         var mesRelatorio = mes + 1; // Próximo mês para exibição no relatório
@@ -121,7 +121,6 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
-
 
 
 
