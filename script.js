@@ -45,7 +45,7 @@ document.getElementById('validade-contrato').addEventListener('input', function 
     e.target.value = formatarData(e.target.value);
 });
 
-function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao) {
+function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIteracao, ultimaIteracao) {
     var diaInicio = parseInt(dataInicio.split('/')[0]);
     console.log("Dia de Início:", diaInicio);
     console.log("Dias no Mês:", diasNoMes);
@@ -54,8 +54,8 @@ function calcularSalarioProporcional(dataInicio, salario, diasNoMes, primeiraIte
         var salarioProporcional = (salario / 30) * (diasNoMes - diaInicio + 1);
         console.log("Salário Proporcional:", salarioProporcional);
         return salarioProporcional;
-     } else if (ultimaIteracao) {
-        var salarioProporcional = (salario / 30) * (diasNoMes);
+    } else if (ultimaIteracao) {
+        var salarioProporcional = (salario / 30) * diasNoMes;
         console.log("Salário Proporcional:", salarioProporcional);
         return salarioProporcional;
     } else {
@@ -109,14 +109,6 @@ function gerarRelatorio() {
         dataInicioRelatorio.setMonth(dataInicioRelatorio.getMonth() + 1);
     }
 
-    // Calcula o salário proporcional na última iteração
-    var diasTotalMesFinal = dataFinalRelatorio.getDate();
-    var salarioProporcionalFinal = (salario / 30) * diasTotalMesFinal;
-    relatorioFinal += "<tr>" +
-        "<td>20/" + (dataFinalRelatorio.getMonth() + 1) + "/" + dataFinalRelatorio.getFullYear() + "</td>" +
-        "<td>" + formatarSalario(salarioProporcionalFinal) + "</td>" +
-        "</tr>";
-
     // Fecha a tabela
     relatorioFinal += "</table>";
 
@@ -126,6 +118,7 @@ function gerarRelatorio() {
     gerarRelatorio.style.display = "none";
     btnRelatorios.style.display = "block";
 }
+
 
 
 // Função para obter o número de dias em um determinado mês
