@@ -115,10 +115,10 @@ function gerarRelatorio() {
        //      anoRelatorio++;
        //  }
     
-        relatorioFinal += "<tr>" +
-            "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
-            "<td>" + formatarSalario(salarioProporcional) + "</td>" +
-            "</tr>";
+        // relatorioFinal += "<tr>" +
+        //     "<td>20/" + mesRelatorio + "/" + anoRelatorio + "</td>" +
+        //     "<td>" + formatarSalario(salarioProporcional) + "</td>" +
+        //     "</tr>";
     
         // Fecha a tabela
         relatorioFinal += "</table>";
